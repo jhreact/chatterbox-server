@@ -34,19 +34,18 @@ exports.handleRequest = function(request, response) {
       postData += chunk;
     });
     request.addListener('end', function() {
-      // console.log("In listener");
       result = JSON.parse(postData);
       if (result) {
-        // console.log("RESULT:");
-        // console.log(result);
         content.results.push(result);
       }
-      // console.log(JSON.stringify(content));
       response.writeHead(statusCode, headers);
-      // response.end(content.toString());
       response.end(JSON.stringify(content));
     });
   } else if (request.method === 'GET' && request.url === '/classes/messages') {
+    var statusCode = 200;
+    response.writeHead(statusCode, headers);
+    response.end(JSON.stringify(content));
+  } else if (request.method === 'GET' && request.url === '/classes/room1') {
     var statusCode = 200;
     response.writeHead(statusCode, headers);
     response.end(JSON.stringify(content));
@@ -56,13 +55,6 @@ exports.handleRequest = function(request, response) {
     response.end("404 Not found");
   }
 
-
-  /* .writeHead() tells our server what HTTP status code to send back */
-
-  /* Make sure to always call response.end() - Node will not send
-   * anything back to the client until you do. The string you pass to
-   * response.end() will be the body of the response - i.e. what shows
-   * up in the browser.*/
 };
 
 /* These headers will allow Cross-Origin Resource Sharing (CORS).
