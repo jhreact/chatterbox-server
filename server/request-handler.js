@@ -17,32 +17,9 @@ exports.handleRequest = function(request, response) {
   /* Documentation for both request and response can be found at
    * http://nodemanual.org/0.8.14/nodejs_ref_guide/http.html */
   //var path = url.parse(request.url).pathname;
-  var data = '';
   var postData = '';
-  request.addListener('data', function(chunk) {
-    postData += chunk;
-  });
-  request.addListener('end', function(chunk) {
-    console.log("POSTDATA");
-    console.log(postData);
-    // if (postData) {
-    //   console.log(postData);
-    // }
-    content.results.push(postData);
-  });
-
+  var result;
   console.log("Serving request type " + request.method + " for url " + request.url);
-  // TODO: Move this into routes or something like that
-  if (request.method === 'POST' && request.url === '/classes/messages') {
-    content.results.push(postData);
-    console.log("results");
-    console.log(content.results);
-    var statusCode = 201;
-  } else if (request.method === 'GET' && request.url === '/classes/messages') {
-    var statusCode = 200;
-  } else {
-    var statusCode = 404;
-  }
 
   /* Without this line, this server wouldn't work. See the note
    * below about CORS. */
@@ -50,14 +27,39 @@ exports.handleRequest = function(request, response) {
 
   headers['Content-Type'] = "text/plain";
 
+  // TODO: Move this into routes or something like that
+  if (request.method === 'POST' && request.url === '/classes/messages') {
+    var statusCode = 201;
+    request.addListener('data', function(chunk) {
+      postData += chunk;
+    });
+    request.addListener('end', function() {
+      // console.log("In listener");
+      result = postData;
+      if (result) {
+        content.results.push(result);
+      }
+      console.log(JSON.stringify(content));
+      response.writeHead(statusCode, headers);
+      response.end(JSON.stringify(content));
+    });
+  } else if (request.method === 'GET' && request.url === '/classes/messages') {
+    var statusCode = 200;
+    response.writeHead(statusCode, headers);
+    response.end(JSON.stringify(content));
+  } else {
+    var statusCode = 404;
+    response.writeHead(statusCode, headers);
+    response.end("404 Not found");
+  }
+
+
   /* .writeHead() tells our server what HTTP status code to send back */
-  response.writeHead(statusCode, headers);
 
   /* Make sure to always call response.end() - Node will not send
    * anything back to the client until you do. The string you pass to
    * response.end() will be the body of the response - i.e. what shows
    * up in the browser.*/
-  response.end(JSON.stringify(content));
 };
 
 /* These headers will allow Cross-Origin Resource Sharing (CORS).
