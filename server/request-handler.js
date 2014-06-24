@@ -23,23 +23,20 @@ exports.handleRequest = function(request, response) {
     postData += chunk;
   });
   request.addListener('end', function(chunk) {
-    console.log("postData");
+    console.log("POSTDATA");
     console.log(postData);
+    // if (postData) {
+    //   console.log(postData);
+    // }
+    content.results.push(postData);
   });
-  // request.on('data', function(chunk) {
-  //   console.log('Reading chunk: ' + chunk);
-  //   data += chunk;
-  // });
-  // request.on('end', function() {
-  //   postData = querystring.parse(data);
-  // });
 
   console.log("Serving request type " + request.method + " for url " + request.url);
   // TODO: Move this into routes or something like that
   if (request.method === 'POST' && request.url === '/classes/messages') {
-    // console.log("POSTDATA");
-    // console.log(postData);
     content.results.push(postData);
+    console.log("results");
+    console.log(content.results);
     var statusCode = 201;
   } else if (request.method === 'GET' && request.url === '/classes/messages') {
     var statusCode = 200;
