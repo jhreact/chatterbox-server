@@ -43,7 +43,8 @@ exports.handleRequest = function(request, response) {
       }
       // console.log(JSON.stringify(content));
       response.writeHead(statusCode, headers);
-      response.end(content.toString());
+      // response.end(content.toString());
+      response.end(JSON.stringify(content));
     });
   } else if (request.method === 'GET' && request.url === '/classes/messages') {
     var statusCode = 200;
