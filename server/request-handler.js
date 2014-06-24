@@ -28,7 +28,7 @@ exports.handleRequest = function(request, response) {
   headers['Content-Type'] = "text/plain";
 
   // TODO: Move this into routes or something like that
-  if (request.method === 'POST' && request.url === '/classes/messages') {
+  if (request.method === 'POST') {
     var statusCode = 201;
     request.addListener('data', function(chunk) {
       postData += chunk;
