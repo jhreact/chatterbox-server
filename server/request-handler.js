@@ -35,13 +35,15 @@ exports.handleRequest = function(request, response) {
     });
     request.addListener('end', function() {
       // console.log("In listener");
-      result = postData;
+      result = JSON.parse(postData);
       if (result) {
+        // console.log("RESULT:");
+        // console.log(result);
         content.results.push(result);
       }
-      console.log(JSON.stringify(content));
+      // console.log(JSON.stringify(content));
       response.writeHead(statusCode, headers);
-      response.end(JSON.stringify(content));
+      response.end(content.toString());
     });
   } else if (request.method === 'GET' && request.url === '/classes/messages') {
     var statusCode = 200;
