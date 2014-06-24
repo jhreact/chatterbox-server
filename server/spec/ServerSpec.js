@@ -18,7 +18,9 @@ describe('Node Server Request Listener Function', function() {
     var req = new stubs.request('/classes/room1', 'GET');
     var res = new stubs.response();
 
-    handler.handler(req, res);
+    // This is the wrong method name!
+    //handler.handler(req, res);
+    handler.handleRequest(req, res);
 
     expect(res._responseCode).to.equal(200);
     expect(res._ended).to.equal(true);
@@ -28,7 +30,9 @@ describe('Node Server Request Listener Function', function() {
     var req = new stubs.request('/classes/room1', 'GET');
     var res = new stubs.response();
 
-    handler.handler(req, res);
+    // This is the wrong method name!
+    //handler.handler(req, res);
+    handler.handleRequest(req, res);
 
     expect(JSON.parse.bind(this, res._data)).to.not.throw();
     expect(res._ended).to.equal(true);
@@ -38,7 +42,9 @@ describe('Node Server Request Listener Function', function() {
     var req = new stubs.request('/classes/room1', 'GET');
     var res = new stubs.response();
 
-    handler.handler(req, res);
+    // This is the wrong method name!
+    //handler.handler(req, res);
+    handler.handleRequest(req, res);
 
     var parsedBody = JSON.parse(res._data);
     expect(parsedBody).to.be.an('object');
@@ -49,7 +55,9 @@ describe('Node Server Request Listener Function', function() {
     var req = new stubs.request('/classes/room1', 'GET');
     var res = new stubs.response();
 
-    handler.handler(req, res);
+    // This is the wrong method name!
+    //handler.handler(req, res);
+    handler.handleRequest(req, res);
 
     var parsedBody = JSON.parse(res._data);
     expect(parsedBody).to.have.property('results');
@@ -65,7 +73,9 @@ describe('Node Server Request Listener Function', function() {
     var req = new stubs.request('/classes/room1', 'POST', stubMsg);
     var res = new stubs.response();
 
-    handler.handler(req, res);
+    // This is the wrong method name!
+    //handler.handler(req, res);
+    handler.handleRequest(req, res);
 
     // Expect 201 Created response status
     expect(res._responseCode).to.equal(201);
@@ -84,7 +94,9 @@ it('Should respond with messages that were previously posted', function() {
     var req = new stubs.request('/classes/room1', 'POST', stubMsg);
     var res = new stubs.response();
 
-    handler.handler(req, res);
+    // This is the wrong method name!
+    //handler.handler(req, res);
+    handler.handleRequest(req, res);
 
     expect(res._responseCode).to.equal(201);
 
@@ -92,7 +104,9 @@ it('Should respond with messages that were previously posted', function() {
     req = new stubs.request('/classes/room1', 'GET');
     res = new stubs.response();
 
-    handler.handler(req, res);
+    // This is the wrong method name!
+    //handler.handler(req, res);
+    handler.handleRequest(req, res);
 
     expect(res._responseCode).to.equal(200);
     var messages = JSON.parse(res._data).results;
@@ -107,7 +121,9 @@ it('Should respond with messages that were previously posted', function() {
     var req = new stubs.request('/arglebargle', 'GET');
     var res = new stubs.response();
 
-    handler.handler(req, res);
+    // This is the wrong method name!
+    //handler.handler(req, res);
+    handler.handleRequest(req, res);
 
     // Wait for response to return and then check status code
     waitForThen(
