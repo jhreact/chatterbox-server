@@ -41,11 +41,10 @@ exports.handleRequest = function(request, response) {
       response.writeHead(statusCode, headers);
       response.end(JSON.stringify(content));
     });
-  } else if (request.method === 'GET' && request.url === '/classes/messages') {
-    var statusCode = 200;
-    response.writeHead(statusCode, headers);
-    response.end(JSON.stringify(content));
-  } else if (request.method === 'GET' && request.url === '/classes/room1') {
+  } else if (request.method === 'GET' &&
+    (request.url === '/classes/messages' ||
+      request.url === '/classes/room1' ||
+      request.url === '/classes/chatterbox') ){
     var statusCode = 200;
     response.writeHead(statusCode, headers);
     response.end(JSON.stringify(content));
