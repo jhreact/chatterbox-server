@@ -41,10 +41,7 @@ exports.handleRequest = function(request, response) {
       response.writeHead(statusCode, headers);
       response.end(JSON.stringify(content));
     });
-  } else if (request.method === 'GET' &&
-    (request.url === '/classes/messages' ||
-      request.url === '/classes/room1' ||
-      request.url === '/classes/chatterbox') ){
+  } else if (request.method === 'GET' || request.method === 'OPTIONS') {
     var statusCode = 200;
     response.writeHead(statusCode, headers);
     response.end(JSON.stringify(content));
